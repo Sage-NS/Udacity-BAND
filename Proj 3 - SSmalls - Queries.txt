@@ -1,0 +1,35 @@
+--Question 1: Which 5 genres of music were added to playlists the most?
+select g.Name, count(t.trackid) TrackCount
+from Playlist p
+join PlaylistTrack pt on p.PlaylistId=pt.PlaylistId
+join Track t on pt.TrackId=t.TrackId
+join Genre g on g.GenreId=t.GenreId
+where p.PlaylistId in (1,5,8,11,12,13,14,15,16,17)
+group by g.name
+order by TrackCount desc
+limit 5;
+
+--Question 2: Which 5 artists recorded the most albums?
+select at.name, count(*) as AlbumCnt
+from Album a
+join Artist at on a.ArtistId = at.ArtistId
+group by at.name
+order by AlbumCnt desc
+limit 5;
+
+--Question 3: Who are the top 3 music composers?
+select T.Composer, g.Name, count(t.composer) ComposedCount
+from track T
+join genre g on g.GenreId=t.GenreId
+group by t.Composer
+order by ComposedCount DESC
+LIMIT 3;
+  
+--Question 4: Which employee assisted the most customers? 
+select e.EmployeeId, e.FirstName, e.LastName, e.FirstName||' '||e.LastName as SupportRepName, count(c.customerid) as CustomersAssisted
+from Employee E
+join Customer C on e.EmployeeId=c.SupportRepId
+group by e.EmployeeId
+order by c.CustomerId;
+
+
